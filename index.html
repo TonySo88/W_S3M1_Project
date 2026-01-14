@@ -25,7 +25,13 @@
     // 🧠 The person also has an `ageGracefully` method, which increases `age` by 1 each time it's called.
     // 🧠 But there's a catch: once `age` reaches 12, the `ageGracefully` method will have no effect.
     class PeterPan {
-
+      constructor(name, age) {
+        this.name = name;
+        this.age = 0;
+      }
+      ageGracefully() {
+        if (this.age < 12) this.age++;
+      }
     }
 
     // 👉 CHALLENGE 2
@@ -38,7 +44,26 @@
     // 🧠 Calling `down` changes the `altitude` prop appropriately and returns the updated `altitude`.
     // 🧠 If calling `down` would cause the plane to go below altitude zero, `altitude` is set to 0 and the string "CRASH!" is returned.
     class AirPlane {
-
+      constructor (model, altitude) {
+        this.model = model;
+        this.altitude = 0;
+      }
+      up (meters) {
+        this.altitude += meters;
+        console.log('up altitude:', this.altitude)
+        console.log('up model:', this.model)
+        return this.altitude;
+      }
+      down (meters) {
+        this.altitude -= meters
+        if (this.altitude < 0) {
+          this.altitude = 0;
+          console.log('down model:', this.model)
+          console.log('down altitude', this.altitude)
+          return 'CRASH!'
+        }
+        return this.altitude;
+      }
     }
 
     // 👉 CHALLENGE 3
@@ -48,7 +73,25 @@
     // 🧠 The methods work as one might expect, changing the value of `isOn` to the appropriate Boolean.
     // 🧠 The methods also return one of these two strings: "You turned the bulb ON", or "You turned the bulb OFF".
     class Bulb {
-
+      constructor (isOn) {
+        this.isOn = false;
+      }
+      turnOn () {
+        this.isOn = true;
+        return "You turned the bulb ON"
+      }
+      turnOff () {
+        this.isOn = false;
+        return "You turned the bulb OFF"
+      }
+      toggle() {
+        this.isOn = !this.isOn;
+        if (this.isOn === true) {
+          return "You turned the bulb ON" 
+        } else {
+          return "You turned the bulb OFF"
+        }
+      }
     }
 
     // 👉 CHALLENGE 4
@@ -66,7 +109,23 @@
     //   minusThree.count() // returns null
     //   minusThree.count() // returns null
     class CountDown {
-
+      constructor(num) {
+        this.num = num
+      }
+      // Normal computation (no state change before return) -> test edge cases first
+      // State-changing operation (increment/decreemnt before return) -> test normal cases first, edge cases after
+      // testing edge cases first due to the logic flow of return first then decrement
+      // else if hits only after this.num = 3, 2, 1
+      count() {
+        if (this.num > 0) { // normal cases
+          return `${this.num--}!`; // return first, then decrement
+        } else if (this.num === 0) {
+          this.num--; // decrement by 1 so next call returns null
+          return 'Liftoff!'
+        } else {
+          return null;
+        }
+      }
     }
 
     // 🧪 TESTS, do not work below this line
